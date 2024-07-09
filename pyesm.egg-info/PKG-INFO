@@ -1,0 +1,12 @@
+Metadata-Version: 2.1
+Name: pyesm
+Version: 0.1
+Summary: ...
+Home-page: https://github.com/MIMO-modelling-suite/pyesm
+Author: Matteo V. Rocco
+Author-email: matteovincenzo.rocco@polimi.it
+License-File: LICENSE
+Requires-Dist: numpy
+Requires-Dist: cvxpy
+Requires-Dist: openpyxl
+Requires-Dist: pytest
