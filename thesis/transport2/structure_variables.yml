@@ -1,0 +1,566 @@
+# variables of the model
+
+# table_key:                                  # name of the data table from which variables are defined
+#     name: table_name                        # description or full name of the table
+#     type: table_type                        # endogenous, exogenous, constant or dictionary 
+#     type:                                   # dictionary with keys as problem key and values as table_type 
+#         problem_key: table_type
+#     coordinates: [a, b, c, d]               # list of table coordinates (set_key symbols)
+#     variables_info:                         # list of variables defined from the data_table
+#         var_key_1:                          # variable name
+#             value: constant_type            # constant value type (predefined)
+#             rows:                           # (optional) rows of the variable
+#                 set: a                      # set_key symbol
+#                 filters: {0: filter_values} # (optional) filters for the set values
+#             cols:                           # (optional) cols of the variable
+#                 set: b                      # set_key symbol
+#                 filters: {0: filter_values} # (optional) filters for the set values
+#             intra:                          # (optional) filter on intra-problem sets 
+#                 set: c                      # set_key symbol
+#                 filters: {0: filter_values} # (optional) filters for the set values
+
+
+# -----------------------------------------------------------------------------
+# exogenous variables
+
+u:
+    name: u
+    type: exogenous
+    coordinates: [scenarios,needs,activities]
+    variables_info:
+        u:
+            rows:
+                set: needs
+            cols:
+                set: activities
+
+d:
+    name: d
+    type: exogenous
+    coordinates: [scenarios,activities,flows]
+    variables_info:
+        d:
+            rows:
+                set: activities
+            cols:
+                set: flows
+
+cf:
+    name: cf
+    type: exogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        cf:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {storage: n}
+
+Y:
+    name: Y
+    type: exogenous
+    coordinates: [scenarios,needs,time_hour]
+    variables_info:
+        Y:
+            rows:
+                set: needs
+            cols:
+                set: time_hour
+
+cost_op:
+    name: cost_op
+    type: exogenous
+    coordinates: [scenarios,activities]
+    variables_info:
+        cost_op:
+            cols:
+                set: activities
+
+cost_inv:
+    name: cost_inv
+    type: exogenous
+    coordinates: [scenarios,techs]
+    variables_info:
+        cost_inv:
+            cols:
+                set: techs
+
+cap_i:
+    name: cap_i
+    type: exogenous
+    coordinates: [scenarios,techs]
+    variables_info:
+        cap_i:
+            cols:
+                set: techs
+
+Act_constr:
+    name: Act_constr
+    type: exogenous
+    coordinates: [scenarios,techs,activities]
+    variables_info:
+        Act_constr:
+            rows:
+                set: activities
+            cols:
+                set: techs
+                filters: {storage: y}
+
+#STORAGE CONSTRAINTS
+storage_min:        #valore minimo del livelo di storage [0,1]
+    name: storage_min
+    type: exogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        storage_min:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {storage: y}
+
+storage_max:        #valore massimo del livelo di storage [0,1]
+    name: storage_max
+    type: exogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        storage_max:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {storage: y}
+
+storage_start:        #valore iniziale del livelo di storage [0,1], anche se definito per tutti i tempi, vale solo per la prima ora
+    name: storage_start
+    type: exogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        storage_start:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {storage: y}
+
+storage_max_disch:        #da moltiplicare a capacità di storage [kWh] per ottenere la potenza di scarica massima [kW]
+    name: storage_max_disch
+    type: exogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        storage_max_disch:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {storage: y}
+
+storage_min_charge:        #da moltiplicare a capacità di storage [kWh] per ottenere la potenza di scarica minima [kW], negativo
+    name: storage_min_charge
+    type: exogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        storage_min_charge:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {storage: y}
+
+Cool_vector:                        #Cooling start vector
+    name: Cool_vector
+    type: exogenous 
+    coordinates: [scenarios,techs,time_hour] 
+    variables_info:
+        Cool_vector: 
+            rows: 
+                set: techs
+                filters: {storage: y}
+            cols: 
+                set: time_hour
+
+#BEV exogenous variables
+BEV_level_min:        #to be multiplied by BEV sorage capacity [kWh] to obtain min BEV SOC 
+    name: BEV_level_min
+    type: exogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        BEV_level_min:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {BEV: y}
+
+BEV_level_max:        #to be multiplied by BEV sorage capacity [kWh] to obtain max BEVSOC 
+    name: BEV_level_max
+    type: exogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        BEV_level_max:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {BEV: y}
+
+BEV_level_start:        #to be multiplied by BEV sorage capacity [kWh] to obtain starting point of BEV SOC 
+    name: BEV_level_start
+    type: exogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        BEV_level_start:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {BEV: y}
+
+BEV_vector:
+    name: BEV_vector
+    type: exogenous
+    coordinates: [scenarios,techs,activities]
+    variables_info:
+        BEV_vector:
+            rows:
+                set: activities
+            cols:
+                set: techs
+                filters: {BEV: y}
+# -----------------------------------------------------------------------------
+# endogenous variables
+
+Q:
+    name: Q
+    type: endogenous
+    coordinates: [scenarios,time_hour,flows]
+    variables_info:
+        Q:
+            rows:
+                set: time_hour
+            cols:
+                set: flows
+
+X:
+    name: X
+    type: endogenous
+    coordinates: [scenarios,time_hour,activities]
+    variables_info:
+        X:
+            rows:
+                set: time_hour
+            cols:
+                set: activities
+        X_storage:
+            rows:
+                set: time_hour
+            cols:
+                set: activities
+                filters: {storage: y}
+        X_no_stor:
+            rows:
+                set: time_hour
+            cols:
+                set: activities
+                filters: {storage: n}
+
+Q_agg:
+    name: Q_agg
+    type: endogenous
+    coordinates: [scenarios,time_hour,needs]
+    variables_info:
+        Q_agg:
+            rows:
+                set: needs
+            cols:
+                set: time_hour
+
+curtail:
+    name: curtail
+    type: endogenous
+    coordinates: [scenarios,time_hour,needs]
+    variables_info:
+        curtail:
+            rows:
+                set: needs
+            cols:
+                set: time_hour
+
+cap_new:
+    name: cap_new
+    type: endogenous
+    coordinates: [scenarios,techs]
+    variables_info:
+        cap_new:
+            cols:
+                set: techs
+        cap_new_BEV_battery:
+            cols:
+                set: techs
+                filters: {BEV: y}
+
+cost_op_tot:
+    name: cost_op_tot
+    type: endogenous
+    coordinates: [scenarios,time_hour,activities]
+    variables_info:
+        cost_op_tot:
+            rows:
+                set: time_hour
+            cols:
+                set: activities
+
+X_agg:
+    name: X_agg
+    type: endogenous
+    coordinates: [scenarios,time_hour,techs]
+    variables_info:
+        X_agg:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+        X_agg_no_stor:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {storage: n}
+        X_agg_stor:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {storage: y}
+
+X_max:
+    name: X_max
+    type: endogenous
+    coordinates: [scenarios,time_hour,techs]
+    variables_info:
+        X_max:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {storage: n}
+
+cap_tot:                                  
+    name: cap_tot                     
+    type: endogenous                        
+    coordinates: [scenarios,techs]               
+    variables_info:                         
+        cap_tot:                          
+            cols:                           
+                set: techs 
+        cap_tot_no_stor:                          
+            cols:                           
+                set: techs 
+                filters: {storage: n}
+        cap_tot_stor:
+            cols:
+                set: techs
+                filters: {storage: y}
+        cap_tot_BEV:
+            cols:
+                set: techs
+                filters: {BEV: y}
+
+#STORAGE
+SOC_min:        #valore minimo del livelo di storage [kWh]
+    name: SOC_min
+    type: endogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        SOC_min:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {storage: y}
+
+SOC_max:        #valore massimo del livelo di storage [kWh]
+    name: SOC_max
+    type: endogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        SOC_max:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {storage: y}
+
+SOC_start:        #valore iniziale del livelo di storage [kWh], anche se definito per tutti i tempi, vale solo per la prima ora
+    name: SOC_start
+    type: endogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        SOC_start:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {storage: y}
+
+SOC:
+    name: SOC
+    type: endogenous
+    coordinates: [scenarios,time_hour,techs]
+    variables_info:
+        SOC:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {storage: y}    
+
+
+max_disch:        #valore massimo per X dello storage= massima scarica [kW]
+    name: max_disch
+    type: endogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        max_disch:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {storage: y}
+
+min_charge:        #valore minimo (negativo) per X dello storage= massimo valore assoluto di carica [kW]
+    name: min_charge
+    type: endogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        min_charge:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {storage: y}
+
+SOC_start_cool: #controllo per la prima parte di SOC
+    name: SOC_start_cool
+    type: endogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        SOC_start_cool:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {storage: y}
+
+SOC_second_part: #controllo per la seconda parte di SOC
+    name: SOC_second_part
+    type: endogenous
+    coordinates: [scenarios,activities,time_hour]
+    variables_info:
+        SOC_second_part:
+            rows:
+                set: time_hour
+            cols:
+                set: activities
+                filters: {storage: y}
+
+#BEV endogenous variables
+BEV_SOC_min:
+    name: BEV_SOC_min
+    type: endogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        BEV_SOC_min:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {BEV: y}
+
+BEV_SOC_max: 
+    name: BEV_SOC_max
+    type: endogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        BEV_SOC_max:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {BEV: y}
+
+BEV_SOC_start:
+    name: BEV_SOC_start
+    type: endogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        BEV_SOC_start:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {BEV: y}
+
+intermedio_BEV:
+    name: intermedio_BEV
+    type: endogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        intermedio_BEV:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {BEV: y}
+
+BEV_SOC:
+    name: BEV_SOC
+    type: endogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        BEV_SOC:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {BEV: y}
+# -----------------------------------------------------------------------------
+# constants variables
+
+I_nf: 
+    name: special identity matrix for flows aggregation into needs
+    type: constant
+    coordinates: [needs, flows]
+    variables_info:
+        I_nf:
+            value: identity_rcot
+            rows: 
+                set: needs
+            cols:
+                set: flows
+
+I_ta:               
+    name: special identity matrix for activities aggregation into technologies
+    type: constant
+    coordinates: [techs, activities]
+    variables_info:
+        I_ta:
+            value: identity_rcot
+            rows: 
+                set: techs
+            cols:
+                set: activities
+
+T_hh:
+    name: Lower triangular matrix (used to depict storage state of charge)
+    type: constant 
+    coordinates: [time_hour] 
+    variables_info:
+        T_hh: 
+            value: lower_triangular
+            rows: 
+                set: time_hour
+            cols:
+                set: time_hour
+

@@ -1,0 +1,42 @@
+# SYMBOLIC PROBLEM
+
+objective:                  # (optional) definition of the objective function
+    - Minimize(sum(cost_op_tot) + cost_inv @ tran(cap_new))         # Minimize() or Maximize() with a scalar obj expression
+
+expressions:                # definition of additional expressions (equalities/inequalities)
+    - Q_agg == I_nf @ tran(Q)    
+    - Q_agg - u @ tran(X) - Y - curtail == 0
+    - X_agg == X @ tran(I_ta)
+    - tran(X)- d @ tran(Q) == 0
+    - X_max == cf @ diag(cap_tot_no_stor)
+    - X_max - X_agg_no_stor >= 0
+    - X_no_stor >= 0 #all X must be positive, except the storage, and Q is all positive (except storage and export thanks to diagonal d)
+    - curtail >= 0
+    - cap_new >= 0
+    - cost_op_tot == X @ diag(cost_op)
+    - cap_tot == cap_new + cap_i
+    - X @ Act_constr >= 0 #in order to export only electricity from PV or storage, and only store electricity from PV
+    
+    #STORAGE equations
+    - max_disch == mult(storage_max_disch,cap_tot_stor)
+    - min_charge == mult(storage_min_charge,cap_tot_stor) 
+    - max_disch - X_agg_stor >= 0 
+    - X_agg_stor - min_charge >= 0
+    - SOC_max == mult(storage_max,cap_tot_stor)
+    - SOC_min == mult(storage_min,cap_tot_stor)
+    - SOC_start == mult(storage_start,cap_tot_stor)
+    - SOC_start_cool == mult(SOC_start,tran(Cool_vector)) #controllo per la prima parte di SOC
+    - SOC_second_part == - T_hh @ X_agg_stor #controllo per la seconda parte di SOC
+    - SOC == mult(SOC_start,tran(Cool_vector))- T_hh @ X_agg_stor #cooling of initial values
+    - SOC >= SOC_min
+    - SOC <= SOC_max
+
+    #BEV equations
+    - BEV_SOC_max == mult(BEV_level_max,cap_tot_BEV)
+    - BEV_SOC_min == mult(BEV_level_min,cap_tot_BEV)
+    - BEV_SOC_start == mult(BEV_level_start,cap_tot_BEV)
+    - intermedio_BEV == X @ BEV_vector
+    - BEV_SOC == BEV_SOC_start - T_hh @ (X @ BEV_vector)
+    - BEV_SOC_max - BEV_SOC >= 0
+    - BEV_SOC - BEV_SOC_min >= 0
+    - cap_new_BEV_battery == 0
