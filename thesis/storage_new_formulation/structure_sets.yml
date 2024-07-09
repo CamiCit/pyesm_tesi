@@ -44,10 +44,7 @@ techs:
         filters:                                
             storage:                                  
                 header: [t_storage, TEXT]        
-                values: [y, n] 
-            BEV:                                  
-                header: [t_BEV, TEXT]        
-                values: [y, n]           
+                values: [y, n]          
                  
 
 activities:                                        
@@ -60,17 +57,17 @@ activities:
           storage:                                  
             header: [a_storage, TEXT]
             values: [y, n]
-
-activities2:                                        
-    symbol: a2                                   
-    table_name: _set_a2                         
-    table_structure:                            
-        name: [a2_names, TEXT] 
-        aggregation: [flows, TEXT]
         filters:                                
-          storage:                                  
-            header: [a2_storage, TEXT]
+          seasonal:                                  
+            header: [a_season, TEXT]
             values: [y, n]
+
+activities_double:                                        
+    symbol: activities_double                                   
+    table_name: _set_a_double                       
+    table_structure:                            
+        name: [a_d_names, TEXT] 
+        aggregation: [flows, TEXT]
 
 scenarios:                                        
     symbol: s                                   
