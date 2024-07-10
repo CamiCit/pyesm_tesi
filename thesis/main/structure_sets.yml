@@ -17,12 +17,18 @@
 #                 values: [a_2a, a_2b]
 # -----------------------------------------------------------------------------
 # sets
+days:                                        
+    symbol: day                                   
+    table_name: _set_days                         
+    table_structure:                           
+        name: [days_names, TEXT] 
 
 time_hour:                                        
     symbol: th                                   
     table_name: _set_th                         
     table_structure:                           
-        name: [th_names, TEXT]                      
+        name: [th_names, TEXT]
+        aggregation: [days, TEXT]                 
 
 needs:                                        
     symbol: n                                   
