@@ -16,10 +16,11 @@ expressions:                # definition of additional expressions (equalities/i
     - cap_new >= 0
     - insulation >= 0
     - 1 - insulation >= 0
-    - cost_op_tot == X @ diag(cost_op)
+    - cost_op_hours == X @ diag(cost_op)
+    - cost_op_tot == (days_per_type @ I_dh) @ cost_op_hours
     - cap_tot == cap_new + cap_i
     - X @ Act_constr >= 0 #in order to export only electricity from PV or storage, and only store electricity from PV
-
+    
     #STORAGE equations
     - max_disch == mult(storage_max_disch,cap_tot_stor)
     - min_charge == mult(storage_min_charge,cap_tot_stor) 

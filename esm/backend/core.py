@@ -427,6 +427,7 @@ class Core:
                 else:
                     problem_keys = [None]
 
+
                 for problem_key in problem_keys:
 
                     if problem_key:
