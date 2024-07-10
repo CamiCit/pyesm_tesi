@@ -105,7 +105,6 @@ Act_constr:
                 set: activities
             cols:
                 set: techs
-                filters: {storage: y}
 
 #Thermal insulation
 TI_param:        #0 for all needs except cold (value between [0,1]) and heat (value between [-1,0])
@@ -267,9 +266,9 @@ Q_agg:
     variables_info:
         Q_agg:
             rows:
-                set: time_hour
-            cols:
                 set: needs
+            cols:
+                set: time_hour
 
 X:
     name: X
