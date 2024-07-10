@@ -22,7 +22,7 @@ time_hour:
     symbol: th                                   
     table_name: _set_th                         
     table_structure:                           
-        name: [th_names, TEXT]                  
+        name: [th_names, TEXT]                      
 
 needs:                                        
     symbol: n                                   
@@ -45,7 +45,10 @@ techs:
         filters:                                
             storage:                                  
                 header: [t_storage, TEXT]        
-                values: [y, n]       
+                values: [y, n]
+            BEV:                                  
+                header: [t_BEV, TEXT]        
+                values: [y, n]          
                  
 
 activities:                                        

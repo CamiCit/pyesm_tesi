@@ -105,7 +105,6 @@ Act_constr:
                 set: activities
             cols:
                 set: techs
-                filters: {storage: y}
 
 #Thermal insulation
 TI_param:        #0 for all needs except cold (value between [0,1]) and heat (value between [-1,0])
@@ -197,6 +196,55 @@ Cool_vector:                        #Cooling start vector
             cols: 
                 set: time_hour
 
+#BEV exogenous variables
+BEV_level_min:        #to be multiplied by BEV sorage capacity [kWh] to obtain min BEV SOC 
+    name: BEV_level_min
+    type: exogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        BEV_level_min:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {BEV: y}
+
+BEV_level_max:        #to be multiplied by BEV sorage capacity [kWh] to obtain max BEVSOC 
+    name: BEV_level_max
+    type: exogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        BEV_level_max:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {BEV: y}
+
+BEV_level_start:        #to be multiplied by BEV sorage capacity [kWh] to obtain starting point of BEV SOC 
+    name: BEV_level_start
+    type: exogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        BEV_level_start:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {BEV: y}
+
+BEV_vector:
+    name: BEV_vector
+    type: exogenous
+    coordinates: [scenarios,techs,activities]
+    variables_info:
+        BEV_vector:
+            rows:
+                set: activities
+            cols:
+                set: techs
+                filters: {BEV: y}
+
 # -----------------------------------------------------------------------------
 # endogenous variables
 
@@ -218,9 +266,9 @@ Q_agg:
     variables_info:
         Q_agg:
             rows:
-                set: time_hour
-            cols:
                 set: needs
+            cols:
+                set: time_hour
 
 X:
     name: X
@@ -270,6 +318,10 @@ cap_new:
         cap_new:
             cols:
                 set: techs
+        cap_new_BEV:
+            cols:
+                set: techs
+                filters: {BEV: y}
 
 cost_op_tot:
     name: cost_op_tot
@@ -333,6 +385,10 @@ cap_tot:
             cols:
                 set: techs
                 filters: {storage: y}
+        cap_tot_BEV:
+            cols:
+                set: techs
+                filters: {BEV: y}
 
 #Thermal insulation
 insulation:                 
@@ -448,6 +504,68 @@ SOC_second_part: #controllo per la seconda parte di SOC
             cols:
                 set: activities
                 filters: {storage: y}
+
+
+#BEV endogenous variables
+BEV_SOC_min:
+    name: BEV_SOC_min
+    type: endogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        BEV_SOC_min:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {BEV: y}
+
+BEV_SOC_max: 
+    name: BEV_SOC_max
+    type: endogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        BEV_SOC_max:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {BEV: y}
+
+BEV_SOC_start:
+    name: BEV_SOC_start
+    type: endogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        BEV_SOC_start:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {BEV: y}
+
+intermedio_BEV:
+    name: intermedio_BEV
+    type: endogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        intermedio_BEV:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {BEV: y}
+
+BEV_SOC:
+    name: BEV_SOC
+    type: endogenous
+    coordinates: [scenarios,techs,time_hour]
+    variables_info:
+        BEV_SOC:
+            rows:
+                set: time_hour
+            cols:
+                set: techs
+                filters: {BEV: y}
 
 # -----------------------------------------------------------------------------
 # constants variables
