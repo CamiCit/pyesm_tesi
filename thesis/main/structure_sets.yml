@@ -22,7 +22,7 @@ time_hour:
     symbol: th                                   
     table_name: _set_th                         
     table_structure:                           
-        name: [th_names, TEXT]                  
+        name: [th_names, TEXT]                      
 
 needs:                                        
     symbol: n                                   

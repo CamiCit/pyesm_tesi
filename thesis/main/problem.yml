@@ -42,4 +42,4 @@ expressions:                # definition of additional expressions (equalities/i
     - BEV_SOC == BEV_SOC_start - T_hh @ (X @ BEV_vector)
     - BEV_SOC_max - BEV_SOC >= 0
     - BEV_SOC - BEV_SOC_min >= 0
-    #- cap_new_BEV_battery == 0
+    - cap_new_BEV == 0

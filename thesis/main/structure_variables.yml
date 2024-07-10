@@ -318,6 +318,10 @@ cap_new:
         cap_new:
             cols:
                 set: techs
+        cap_new_BEV:
+            cols:
+                set: techs
+                filters: {BEV: y}
 
 cost_op_tot:
     name: cost_op_tot
@@ -562,6 +566,7 @@ BEV_SOC:
             cols:
                 set: techs
                 filters: {BEV: y}
+
 # -----------------------------------------------------------------------------
 # constants variables
 
