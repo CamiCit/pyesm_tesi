@@ -1,7 +1,7 @@
 # SYMBOLIC PROBLEM
 
 objective:                  # (optional) definition of the objective function
-    - Minimize(sum(cost_op_tot) + cost_inv @ tran(cap_new))         # Minimize() or Maximize() with a scalar obj expression
+    - Minimize(sum(cost_op_tot) + cost_inv @ tran(cap_new) + insulation @ TI_cost)         # Minimize() or Maximize() with a scalar obj expression
 
 expressions:                # definition of additional expressions (equalities/inequalities)   
     - Q_agg == I_nf @ tran(Q) 
