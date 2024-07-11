@@ -325,6 +325,12 @@ curtail:
                 set: needs
             cols:
                 set: time_hour
+        curtail_peak:
+            rows:
+                set: needs
+            cols:
+                set: time_hour
+                filters: {peak: y}
 
 cap_new:
     name: cap_new
