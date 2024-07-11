@@ -28,7 +28,12 @@ time_hour:
     table_name: _set_th                         
     table_structure:                           
         name: [th_names, TEXT]
-        aggregation: [days, TEXT]                 
+        aggregation: [days, TEXT]
+        filters: 
+            peak:                                  
+                header: [h_peak, TEXT]
+                values: [y, n]
+
 
 needs:                                        
     symbol: n                                   

@@ -141,6 +141,7 @@ storage_min:        #valore minimo del livelo di storage [0,1]
         storage_min:
             rows:
                 set: time_hour
+                filters: {peak: n}
             cols:
                 set: techs
                 filters: {storage: y}
@@ -153,6 +154,7 @@ storage_max:        #valore massimo del livelo di storage [0,1]
         storage_max:
             rows:
                 set: time_hour
+                filters: {peak: n}
             cols:
                 set: techs
                 filters: {storage: y}
@@ -165,6 +167,7 @@ storage_start:        #valore iniziale del livelo di storage [0,1], anche se def
         storage_start:
             rows:
                 set: time_hour
+                filters: {peak: n}
             cols:
                 set: techs
                 filters: {storage: y}
@@ -204,6 +207,7 @@ Cool_vector:                        #Cooling start vector
                 filters: {storage: y}
             cols: 
                 set: time_hour
+                filters: {peak: n}
 
 #BEV exogenous variables
 BEV_level_min:        #to be multiplied by BEV sorage capacity [kWh] to obtain min BEV SOC 
@@ -214,6 +218,7 @@ BEV_level_min:        #to be multiplied by BEV sorage capacity [kWh] to obtain m
         BEV_level_min:
             rows:
                 set: time_hour
+                filters: {peak: n}
             cols:
                 set: techs
                 filters: {BEV: y}
@@ -226,6 +231,7 @@ BEV_level_max:        #to be multiplied by BEV sorage capacity [kWh] to obtain m
         BEV_level_max:
             rows:
                 set: time_hour
+                filters: {peak: n}
             cols:
                 set: techs
                 filters: {BEV: y}
@@ -238,6 +244,7 @@ BEV_level_start:        #to be multiplied by BEV sorage capacity [kWh] to obtain
         BEV_level_start:
             rows:
                 set: time_hour
+                filters: {peak: n}
             cols:
                 set: techs
                 filters: {BEV: y}
@@ -289,24 +296,24 @@ X:
                 set: time_hour
             cols:
                 set: activities
-        X_storage:
-            rows:
-                set: time_hour
-            cols:
-                set: activities
-                filters: {storage: y}
         X_no_stor:
             rows:
                 set: time_hour
             cols:
                 set: activities
                 filters: {storage: n}
-        X_season:
+        X_no_peak:
             rows:
                 set: time_hour
+                filters: {peak: n}
             cols:
                 set: activities
-                filters: {seasonal: y}
+#        X_season:
+#            rows:
+#                set: time_hour
+#            cols:
+#                set: activities
+#                filters: {seasonal: y}
 
 curtail:
     name: curtail
@@ -318,6 +325,12 @@ curtail:
                 set: needs
             cols:
                 set: time_hour
+        curtail_peak:
+            rows:
+                set: needs
+            cols:
+                set: time_hour
+                filters: {peak: y}
 
 cap_new:
     name: cap_new
@@ -369,6 +382,13 @@ X_t:
                 set: techs
                 filters: {storage: n}
         X_t_stor:
+            rows:
+                set: time_hour
+                filters: {peak: n}
+            cols:
+                set: techs
+                filters: {storage: y}
+        X_t_stor_all:
             rows:
                 set: time_hour
             cols:
@@ -434,6 +454,7 @@ SOC_min:        #valore minimo del livelo di storage [kWh]
         SOC_min:
             rows:
                 set: time_hour
+                filters: {peak: n}
             cols:
                 set: techs
                 filters: {storage: y}
@@ -446,6 +467,7 @@ SOC_max:        #valore massimo del livelo di storage [kWh]
         SOC_max:
             rows:
                 set: time_hour
+                filters: {peak: n}
             cols:
                 set: techs
                 filters: {storage: y}
@@ -458,6 +480,7 @@ SOC_start:        #valore iniziale del livelo di storage [kWh], anche se definit
         SOC_start:
             rows:
                 set: time_hour
+                filters: {peak: n}
             cols:
                 set: techs
                 filters: {storage: y}
@@ -470,6 +493,7 @@ SOC:
         SOC:
             rows:
                 set: time_hour
+                filters: {peak: n}
             cols:
                 set: techs
                 filters: {storage: y}    
@@ -507,6 +531,7 @@ SOC_start_cool: #controllo per la prima parte di SOC
         SOC_start_cool:
             rows:
                 set: time_hour
+                filters: {peak: n}
             cols:
                 set: techs
                 filters: {storage: y}
@@ -519,6 +544,7 @@ SOC_second_part: #controllo per la seconda parte di SOC
         SOC_second_part:
             rows:
                 set: time_hour
+                filters: {peak: n}
             cols:
                 set: activities
                 filters: {storage: y}
@@ -533,6 +559,7 @@ BEV_SOC_min:
         BEV_SOC_min:
             rows:
                 set: time_hour
+                filters: {peak: n}
             cols:
                 set: techs
                 filters: {BEV: y}
@@ -545,6 +572,7 @@ BEV_SOC_max:
         BEV_SOC_max:
             rows:
                 set: time_hour
+                filters: {peak: n}
             cols:
                 set: techs
                 filters: {BEV: y}
@@ -557,6 +585,7 @@ BEV_SOC_start:
         BEV_SOC_start:
             rows:
                 set: time_hour
+                filters: {peak: n}
             cols:
                 set: techs
                 filters: {BEV: y}
@@ -569,6 +598,7 @@ intermedio_BEV:
         intermedio_BEV:
             rows:
                 set: time_hour
+                filters: {peak: n}
             cols:
                 set: techs
                 filters: {BEV: y}
@@ -581,6 +611,7 @@ BEV_SOC:
         BEV_SOC:
             rows:
                 set: time_hour
+                filters: {peak: n}
             cols:
                 set: techs
                 filters: {BEV: y}
@@ -621,8 +652,10 @@ T_hh:
             value: lower_triangular
             rows: 
                 set: time_hour
+                filters: {peak: n}
             cols:
                 set: time_hour
+                filters: {peak: n}
 
 Flows_ones:
      name: Vector of 1s as long as flows
