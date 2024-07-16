@@ -107,6 +107,27 @@ Act_constr:
                 set: techs
                 filters: {storage: y}
 
+days_per_type:        
+    name: Days of each type in one year #The sum must be 365
+    type: exogenous
+    coordinates: [scenarios,days]
+    variables_info:
+        days_per_type:
+            cols:
+                set: days
+
+sf:
+    name: seasonal activity limit [0,1]
+    type: exogenous
+    coordinates: [scenarios,activities,time_hour]
+    variables_info:
+        sf:
+            rows:
+                set: time_hour
+            cols:
+                set: activities
+                filters: {seasonal: y}
+
 #Thermal insulation
 TI_param:        #0 for all needs except cold (value between [0,1]) and heat (value between [-1,0])
     name: TI_param
@@ -260,14 +281,23 @@ cap_new:
             cols:
                 set: techs
 
-cost_op_tot:
-    name: cost_op_tot
+cost_op_hours:
+    name: cost_op_hours
     type: endogenous
     coordinates: [scenarios,time_hour,activities]
     variables_info:
-        cost_op_tot:
+        cost_op_hours:
             rows:
                 set: time_hour
+            cols:
+                set: activities
+
+cost_op_tot:
+    name: cost_op_tot
+    type: endogenous
+    coordinates: [scenarios,activities]
+    variables_info:
+        cost_op_tot:
             cols:
                 set: activities
 
@@ -468,12 +498,12 @@ SOC_second_part: #controllo per la seconda parte di SOC
 I_af: 
     name: special identity matrix for flows aggregation into needs
     type: constant
-    coordinates: [activities_double, flows]
+    coordinates: [activities2, flows]
     variables_info:
         I_nf:
             value: identity_rcot
             rows: 
-                set: activities_double
+                set: activities2
             cols:
                 set: flows
 
@@ -510,3 +540,15 @@ Flows_ones:
              value: sum_vector
              cols:
                  set: needs
+
+I_dh: 
+    name: special identity matrix for flows aggregation into needs
+    type: constant
+    coordinates: [days, time_hour]
+    variables_info:
+        I_dh:
+            value: identity_rcot
+            rows: 
+                set: days
+            cols:
+                set: time_hour

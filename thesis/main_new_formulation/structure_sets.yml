@@ -54,19 +54,18 @@ activities:
         name: [a_names, TEXT] 
         aggregation: [techs, TEXT]
         filters:                                
-          storage:                                  
-            header: [a_storage, TEXT]
-            values: [y, n]
-        filters:                                
-          seasonal:                                  
-            header: [a_season, TEXT]
-            values: [y, n]
+            storage:                                  
+                header: [a_storage, TEXT]
+                values: [y, n]                              
+            seasonal:                                  
+                header: [a_season, TEXT]
+                values: [y, n]
 
-activities_double:                                        
-    symbol: activities_double                                   
-    table_name: _set_a_double                       
+activities2:                                        
+    symbol: activities2                                  
+    table_name: _set_a2                    
     table_structure:                            
-        name: [a_d_names, TEXT] 
+        name: [a2_names, TEXT] 
         aggregation: [flows, TEXT]
 
 scenarios:                                        

@@ -44,4 +44,4 @@ expressions:                # definition of additional expressions (equalities/i
     - BEV_SOC == BEV_SOC_start - T_hh @ (X_no_peak @ BEV_vector)
     - BEV_SOC_max - BEV_SOC >= 0
     - BEV_SOC - BEV_SOC_min >= 0
-    - cap_new_BEV == 0
+    - cap_new_BEV == 0 #can't install new storage on BEV once it is purchased
