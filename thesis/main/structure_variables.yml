@@ -261,6 +261,26 @@ BEV_vector:
                 set: techs
                 filters: {BEV: y}
 
+cool_factors:
+    name: cooling factor for each storage technology
+    type: exogenous
+    coordinates: [scenarios,techs]
+    variables_info:
+        cool_factors:
+            rows:
+                set: techs
+                filters: {storage: y}
+        cool_factors_t:
+            intra:
+                set: techs
+                filters: {storage: y}
+
+n_hours:                        #scalar to give as input to T_hh_cool
+    name: number of hours
+    type: exogenous 
+    coordinates: [scenarios] 
+    variables_info:
+        n_hours: 
 # -----------------------------------------------------------------------------
 # endogenous variables
 
@@ -616,9 +636,22 @@ BEV_SOC:
                 set: techs
                 filters: {BEV: y}
 
+T_hh_cool_visual_t:
+    name: per visualizzare la thh_cool function
+    type: endogenous 
+    coordinates: [scenarios, techs, time_hour,time_hour2] 
+    variables_info:
+        T_hh_cool_visual_t: 
+            rows: 
+                set: time_hour
+                filters: {peak: n}
+            cols:
+                set: time_hour2
+            intra:
+                set: techs
+                filters: {storage: y}
 # -----------------------------------------------------------------------------
 # constants variables
-
 I_nf: 
     name: special identity matrix for flows aggregation into needs
     type: constant

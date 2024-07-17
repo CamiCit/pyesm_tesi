@@ -168,6 +168,7 @@ class Constants:
         'weib': util_functions.weibull_distribution,
         'Minimize': cp.Minimize,
         'Maximize': cp.Maximize,
+        'power_tri': util_functions.power_tril,
     }
 
     # NUMERICAL SETTINGS

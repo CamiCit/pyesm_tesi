@@ -495,17 +495,17 @@ SOC_second_part: #controllo per la seconda parte di SOC
 # -----------------------------------------------------------------------------
 # constants variables
 
-I_af: 
+I_fa: 
     name: special identity matrix for flows aggregation into needs
     type: constant
     coordinates: [activities2, flows]
     variables_info:
-        I_nf:
+        I_fa:
             value: identity_rcot
             rows: 
-                set: activities2
-            cols:
                 set: flows
+            cols:
+                set: activities2
 
 I_ta:               
     name: special identity matrix for activities aggregation into technologies
@@ -552,3 +552,4 @@ I_dh:
                 set: days
             cols:
                 set: time_hour
+

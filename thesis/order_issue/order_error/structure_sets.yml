@@ -15,30 +15,15 @@
 #             1: 
 #                 header: [a_Cat_2, TEXT] 
 #                 values: [a_2a, a_2b]
+
+
 # -----------------------------------------------------------------------------
 # sets
-days:                                        
-    symbol: day                                   
-    table_name: _set_days                         
-    table_structure:                           
-        name: [days_names, TEXT] 
-
 time_hour:                                        
     symbol: th                                   
     table_name: _set_th                         
     table_structure:                           
-        name: [th_names, TEXT]
-        aggregation: [days, TEXT]
-        filters: 
-            peak:                                  
-                header: [h_peak, TEXT]
-                values: [y, n]
-
-time_hour2:                                        
-    symbol: th2                                   
-    table_name: _set_th2                         
-    table_structure:                           
-        name: [th2_names, TEXT]
+        name: [th_names, TEXT]                   
 
 needs:                                        
     symbol: n                                   
@@ -48,24 +33,16 @@ needs:
 
 flows:                                        
     symbol: f                                   
-    table_name: _set_f              
-    table_structure:                           
-        name: [f_names, TEXT]  
-        aggregation: [needs, TEXT]                 
-                                   
+    table_name: _set_f                        
+    table_structure:                            
+        name: [f_names, TEXT]                   
+        aggregation: [needs, TEXT]                             
+
 techs:                                        
     symbol: t                                   
     table_name: _set_t                         
     table_structure:                            
         name: [t_names, TEXT] 
-        filters:                                
-            storage:                                  
-                header: [t_storage, TEXT]        
-                values: [y, n]
-            BEV:                                  
-                header: [t_BEV, TEXT]        
-                values: [y, n]          
-                 
 
 activities:                                        
     symbol: a                                   
@@ -73,10 +50,6 @@ activities:
     table_structure:                            
         name: [a_names, TEXT] 
         aggregation: [techs, TEXT]
-        filters:                                
-            storage:                                  
-                header: [a_storage, TEXT]
-                values: [y, n]                              
 
 scenarios:                                        
     symbol: s                                   
