@@ -571,31 +571,31 @@ min_charge:        #valore minimo (negativo) per X dello storage= massimo valore
                 set: techs
                 filters: {storage: y}
 
-SOC_start_cool: #controllo per la prima parte di SOC
-    name: SOC_start_cool
-    type: endogenous
-    coordinates: [scenarios,techs,time_hour]
-    variables_info:
-        SOC_start_cool:
-            rows:
-                set: time_hour
-                filters: {peak: n}
-            cols:
-                set: techs
-                filters: {storage: y}
+# SOC_start_cool: #controllo per la prima parte di SOC
+#     name: SOC_start_cool
+#     type: endogenous
+#     coordinates: [scenarios,techs,time_hour]
+#     variables_info:
+#         SOC_start_cool:
+#             rows:
+#                 set: time_hour
+#                 filters: {peak: n}
+#             cols:
+#                 set: techs
+#                 filters: {storage: y}
 
-SOC_second_part: #controllo per la seconda parte di SOC
-    name: SOC_second_part
-    type: endogenous
-    coordinates: [scenarios,activities,time_hour]
-    variables_info:
-        SOC_second_part:
-            rows:
-                set: time_hour
-                filters: {peak: n}
-            cols:
-                set: activities
-                filters: {storage: y}
+# SOC_second_part: #controllo per la seconda parte di SOC
+#     name: SOC_second_part
+#     type: endogenous
+#     coordinates: [scenarios,activities,time_hour]
+#     variables_info:
+#         SOC_second_part:
+#             rows:
+#                 set: time_hour
+#                 filters: {peak: n}
+#             cols:
+#                 set: activities
+#                 filters: {storage: y}
 
 
 #BEV endogenous variables
@@ -638,18 +638,18 @@ BEV_SOC_start:
                 set: techs
                 filters: {BEV: y}
 
-intermedio_BEV:
-    name: intermedio_BEV
-    type: endogenous
-    coordinates: [scenarios,techs,time_hour]
-    variables_info:
-        intermedio_BEV:
-            rows:
-                set: time_hour
-                filters: {peak: n}
-            cols:
-                set: techs
-                filters: {BEV: y}
+# intermedio_BEV:
+#     name: intermedio_BEV
+#     type: endogenous
+#     coordinates: [scenarios,techs,time_hour]
+#     variables_info:
+#         intermedio_BEV:
+#             rows:
+#                 set: time_hour
+#                 filters: {peak: n}
+#             cols:
+#                 set: techs
+#                 filters: {BEV: y}
 
 BEV_SOC:
     name: BEV_SOC
@@ -664,20 +664,6 @@ BEV_SOC:
                 set: techs
                 filters: {BEV: y}
 
-T_hh_cool_visual_t:
-    name: per visualizzare la thh_cool function
-    type: endogenous 
-    coordinates: [scenarios, techs, time_hour,time_hour2] 
-    variables_info:
-        T_hh_cool_visual_t: 
-            rows: 
-                set: time_hour
-                filters: {peak: n}
-            cols:
-                set: time_hour2
-            intra:
-                set: techs
-                filters: {storage: y}
 # -----------------------------------------------------------------------------
 # constants variables
 I_nf: 

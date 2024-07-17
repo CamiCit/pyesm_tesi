@@ -34,12 +34,6 @@ time_hour:
                 header: [h_peak, TEXT]
                 values: [y, n]
 
-time_hour2:                                        
-    symbol: th2                                   
-    table_name: _set_th2                         
-    table_structure:                           
-        name: [th2_names, TEXT]
-
 needs:                                        
     symbol: n                                   
     table_name: _set_needs                         

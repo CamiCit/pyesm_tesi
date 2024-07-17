@@ -30,20 +30,21 @@ expressions:                # definition of additional expressions (equalities/i
     - SOC_max == mult(storage_max,cap_tot_stor)
     - SOC_min == mult(storage_min,cap_tot_stor)
     - SOC_start == mult(storage_start,cap_tot_stor)
-    - SOC_start_cool == mult(SOC_start,tran(Cool_vector)) #controllo per la prima parte di SOC
-    - SOC_second_part == - T_hh @ X_t_stor #controllo per la seconda parte di SOC
-    #- SOC == mult(SOC_start,tran(Cool_vector))- T_hh @ X_t_stor #cooling of initial values
     - SOC_t == mult(SOC_start_t,tran(Cool_vector_t))- power_tri(n_hours,cool_factors_t) @ X_t_stor_t
     - SOC >= SOC_min
     - SOC <= SOC_max
-    - T_hh_cool_visual_t == power_tri(n_hours,cool_factors_t)
 
     #BEV equations
     - BEV_SOC_max == mult(BEV_level_max,cap_tot_BEV)
     - BEV_SOC_min == mult(BEV_level_min,cap_tot_BEV)
     - BEV_SOC_start == mult(BEV_level_start,cap_tot_BEV)
-    - intermedio_BEV == X_no_peak @ BEV_vector
     - BEV_SOC == BEV_SOC_start - T_hh @ (X_no_peak @ BEV_vector)
     - BEV_SOC_max - BEV_SOC >= 0
     - BEV_SOC - BEV_SOC_min >= 0
     - cap_new_BEV == 0 #can't install new storage on BEV once it is purchased
+
+#Di controllo, commentate anche nelle variabili
+    #- SOC_start_cool == mult(SOC_start,tran(Cool_vector)) #controllo per la prima parte di SOC
+    #- SOC_second_part == - T_hh @ X_t_stor #controllo per la seconda parte di SOC
+    #- SOC == mult(SOC_start,tran(Cool_vector))- T_hh @ X_t_stor #only cooling of initial values
+    #- intermedio_BEV == X_no_peak @ BEV_vector
