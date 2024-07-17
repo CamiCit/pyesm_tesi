@@ -32,8 +32,8 @@ expressions:                # definition of additional expressions (equalities/i
     - SOC_start == mult(storage_start,cap_tot_stor)
     - SOC_start_cool == mult(SOC_start,tran(Cool_vector)) #controllo per la prima parte di SOC
     - SOC_second_part == - T_hh @ X_t_stor #controllo per la seconda parte di SOC
-    - SOC == mult(SOC_start,tran(Cool_vector))- T_hh @ X_t_stor #cooling of initial values
-    #- SOC_t == mult(SOC_start_t,tran(Cool_vector_t))- T_hh_cool(t_hours,cool_factors_t) @ X_t_stor_t
+    #- SOC == mult(SOC_start,tran(Cool_vector))- T_hh @ X_t_stor #cooling of initial values
+    - SOC_t == mult(SOC_start_t,tran(Cool_vector_t))- power_tri(n_hours,cool_factors_t) @ X_t_stor_t
     - SOC >= SOC_min
     - SOC <= SOC_max
     - T_hh_cool_visual_t == power_tri(n_hours,cool_factors_t)

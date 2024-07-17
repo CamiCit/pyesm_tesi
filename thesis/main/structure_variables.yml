@@ -208,6 +208,13 @@ Cool_vector:                        #Cooling start vector
             cols: 
                 set: time_hour
                 filters: {peak: n}
+        Cool_vector_t: 
+            intra: 
+                set: techs
+                filters: {storage: y}
+            cols: 
+                set: time_hour
+                filters: {peak: n}
 
 #BEV exogenous variables
 BEV_level_min:        #to be multiplied by BEV sorage capacity [kWh] to obtain min BEV SOC 
@@ -408,6 +415,13 @@ X_t:
             cols:
                 set: techs
                 filters: {storage: y}
+        X_t_stor_t:
+            rows:
+                set: time_hour
+                filters: {peak: n}
+            intra:
+                set: techs
+                filters: {storage: y}
         X_t_stor_all:
             rows:
                 set: time_hour
@@ -504,6 +518,13 @@ SOC_start:        #valore iniziale del livelo di storage [kWh], anche se definit
             cols:
                 set: techs
                 filters: {storage: y}
+        SOC_start_t:
+            rows:
+                set: time_hour
+                filters: {peak: n}
+            intra:
+                set: techs
+                filters: {storage: y}
 
 SOC:
     name: SOC
@@ -515,6 +536,13 @@ SOC:
                 set: time_hour
                 filters: {peak: n}
             cols:
+                set: techs
+                filters: {storage: y}
+        SOC_t:
+            rows:
+                set: time_hour
+                filters: {peak: n}
+            intra:
                 set: techs
                 filters: {storage: y}    
 
