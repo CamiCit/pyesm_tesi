@@ -1,16 +1,15 @@
 """
-Thh_functions.py 
-Building a matrix to model phenomena with a linear change through time, 
-each column containing a power series from the top 1 to the bottom (cooling_factor)^n_rows
+special_tril.py 
+Building a matrix to create lower triangular matrixes...
 """
-
-from typing import Iterable
 import numpy as np
 import pandas as pd
 import cvxpy as cp
 
-def power_tril(
-        dimension: int, 
+
+def special_tril(
+        dimension: cp.Parameter, 
+        matr_type: str,
         power_factor: cp.Parameter,
 ) -> np.array:
     """
@@ -30,12 +29,17 @@ def power_tril(
         ValueError: If passed dimension is not greater than zero.
         TypeError: If passed dimension is not an integer.
     """
-    #warnings
-
+    # Warnings
+    if not isinstance(dimension, cp.Parameter):
+        raise TypeError("dimension must be a cvxpy.Parameter")
+    if not isinstance(power_factor, cp.Parameter):
+        raise TypeError("power_factor must be a cvxpy.Parameter")
+    
     #Extract values from cvxpy parameters
     pf: np.ndarray = power_factor.value #pf defined for storage technologies, one equation for each storage tech 
-    dim: np.ndarray = dimension.value
-   
+    dim = int(dimension.value)  # Extract the integer value of the dimension
+    
+    # Initialize the matrix
     matrix = np.zeros((dim, dim))
 
     for i in range(dim):
@@ -43,6 +47,6 @@ def power_tril(
             if i == j:
                 matrix[i, j] = 1
             else:
-                matrix[i, j] = matrix[i - 1, j] * pf #how to extract the cf for the right tech?
+                matrix[i, j] = matrix[i - 1, j] * pf
 
     return matrix
