@@ -165,7 +165,7 @@ class Core:
         # and for variables whth type defined by problem linking logic
         for data_table_key, data_table in self.index.data.items():
 
-            if data_table.type == 'endogenous'\
+            if data_table.type == 'endogenous' or \
                     isinstance(data_table.type, dict):
 
                 self.logger.debug(
@@ -200,7 +200,7 @@ class Core:
 
                 data_table.cvxpy_var = cvxpy_var
 
-            if data_table.type == 'endogenous_integer'\
+            elif data_table.type == 'endogenous_integer' or \
                     isinstance(data_table.type, dict):
 
                 self.logger.debug(
@@ -228,7 +228,7 @@ class Core:
                     for problem_key, variable_df in data_table.coordinates_dataframe.items():
 
                         cvxpy_var[problem_key] = self.problem.create_cvxpy_variable(
-                            var_type='endogenous',
+                            var_type='endogenous_integer',
                             shape=(len(variable_df), 1),
                             name=f"{data_table_key}_{problem_key}",
                         )

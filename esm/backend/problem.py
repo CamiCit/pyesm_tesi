@@ -535,7 +535,7 @@ class Problem:
                     merged_df.index[0]
 
         # create new cvxpy variables (exogenous vars and constants)
-        if variable_type != 'endogenous' variable_type != 'endogenous_integer':
+        if variable_type != 'endogenous' and variable_type != 'endogenous_integer':
             for row in var_data.index:
                 var_data.at[row, headers['cvxpy']] = \
                     self.create_cvxpy_variable(
