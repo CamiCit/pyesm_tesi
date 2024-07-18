@@ -2,7 +2,7 @@
 
 # table_key:                                  # name of the data table from which variables are defined
 #     name: table_name                        # description or full name of the table
-#     type: table_type                        # endogenous, exogenous, constant or dictionary 
+#     type: table_type                        # endogenous, endogenous_integer exogenous, constant or dictionary 
 #     type:                                   # dictionary with keys as problem key and values as table_type 
 #         problem_key: table_type
 #     coordinates: [a, b, c, d]               # list of table coordinates (set_key symbols)
@@ -664,6 +664,15 @@ BEV_SOC:
                 set: techs
                 filters: {BEV: y}
 
+#endogenous integer
+cap_new_int:
+    name: cap_new
+    type: endogenous_integer
+    coordinates: [scenarios,techs]
+    variables_info:
+        cap_new_int:
+            cols:
+                set: techs
 # -----------------------------------------------------------------------------
 # constants variables
 I_nf: 
