@@ -17,7 +17,6 @@
 #                 values: [a_2a, a_2b]
 # -----------------------------------------------------------------------------
 # sets
-
 days:                                        
     symbol: day                                   
     table_name: _set_days                         
@@ -33,7 +32,7 @@ time_hour:
         filters: 
             peak:                                  
                 header: [h_peak, TEXT]
-                values: [y, n]              
+                values: [y, n]
 
 needs:                                        
     symbol: n                                   
@@ -45,7 +44,8 @@ flows:
     symbol: f                                   
     table_name: _set_f              
     table_structure:                           
-        name: [f_names, TEXT]                   
+        name: [f_names, TEXT]  
+        aggregation: [needs, TEXT]                 
                                    
 techs:                                        
     symbol: t                                   
@@ -58,7 +58,7 @@ techs:
                 values: [y, n]
             BEV:                                  
                 header: [t_BEV, TEXT]        
-                values: [y, n]            
+                values: [y, n]          
                  
 
 activities:                                        
@@ -71,16 +71,6 @@ activities:
             storage:                                  
                 header: [a_storage, TEXT]
                 values: [y, n]                              
-            seasonal:                                  
-                header: [a_season, TEXT]
-                values: [y, n]
-
-activities2:                                        
-    symbol: activities2                                  
-    table_name: _set_a2                    
-    table_structure:                            
-        name: [a2_names, TEXT] 
-        aggregation: [flows, TEXT]
 
 scenarios:                                        
     symbol: s                                   

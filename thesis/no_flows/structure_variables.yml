@@ -35,13 +35,13 @@ u:
                 set: activities
 
 d:
-    name: d #change of shape from the previous model
+    name: d
     type: exogenous
-    coordinates: [scenarios,needs,flows]
+    coordinates: [scenarios,activities,flows]
     variables_info:
         d:
             rows:
-                set: needs
+                set: activities
             cols:
                 set: flows
 
@@ -95,7 +95,7 @@ cap_i:
             cols:
                 set: techs
 
-Act_constr:
+Act_constr:        
     name: Act_constr
     type: exogenous
     coordinates: [scenarios,techs,activities]
@@ -114,18 +114,6 @@ days_per_type:
         days_per_type:
             cols:
                 set: days
-
-sf:
-    name: seasonal activity limit [0,1]
-    type: exogenous
-    coordinates: [scenarios,activities,time_hour]
-    variables_info:
-        sf:
-            rows:
-                set: time_hour
-            cols:
-                set: activities
-                filters: {seasonal: y}
 
 #Thermal insulation
 TI_param:        #0 for all needs except cold (value between [0,1]) and heat (value between [-1,0])
@@ -208,8 +196,7 @@ storage_min_charge:        #da moltiplicare a capacità di storage [kWh] per ott
                 set: techs
                 filters: {storage: y}
 
-
-Cool_vector:                        #Cooling of starting value vector
+Cool_vector:                        #Cooling start vector
     name: Cool_vector
     type: exogenous 
     coordinates: [scenarios,techs,time_hour] 
@@ -228,7 +215,6 @@ Cool_vector:                        #Cooling of starting value vector
             cols: 
                 set: time_hour
                 filters: {peak: n}
-
 
 #BEV exogenous variables
 BEV_level_min:        #to be multiplied by BEV sorage capacity [kWh] to obtain min BEV SOC 
@@ -304,16 +290,28 @@ n_hours:                        #scalar to give as input to T_hh_cool
         n_hours: 
 # -----------------------------------------------------------------------------
 # endogenous variables
+
 Q:
     name: Q
     type: endogenous
-    coordinates: [scenarios,time_hour,needs]
+    coordinates: [scenarios,time_hour,flows]
     variables_info:
         Q:
             rows:
                 set: time_hour
             cols:
+                set: flows
+
+Q_agg:
+    name: Q_agg
+    type: endogenous
+    coordinates: [scenarios,time_hour,needs]
+    variables_info:
+        Q_agg:
+            rows:
                 set: needs
+            cols:
+                set: time_hour
 
 X:
     name: X
@@ -325,30 +323,24 @@ X:
                 set: time_hour
             cols:
                 set: activities
-        X_storage:
-            rows:
-                set: time_hour
-            cols:
-                set: activities
-                filters: {storage: y}
         X_no_stor:
             rows:
                 set: time_hour
             cols:
                 set: activities
                 filters: {storage: n}
-        X_season:
-            rows:
-                set: time_hour
-            cols:
-                set: activities
-                filters: {seasonal: y}
         X_no_peak:
             rows:
                 set: time_hour
                 filters: {peak: n}
             cols:
                 set: activities
+#        X_season:
+#            rows:
+#                set: time_hour
+#            cols:
+#                set: activities
+#                filters: {seasonal: y}
 
 curtail:
     name: curtail
@@ -419,6 +411,7 @@ X_t:
         X_t_stor:
             rows:
                 set: time_hour
+                filters: {peak: n}
             cols:
                 set: techs
                 filters: {storage: y}
@@ -464,6 +457,10 @@ cap_tot:
             cols:
                 set: techs
                 filters: {storage: y}
+        cap_tot_BEV:
+            cols:
+                set: techs
+                filters: {BEV: y}
 
 #Thermal insulation
 insulation:                 
@@ -480,32 +477,7 @@ TI:        #0 for all needs except cold (value between [0,1]) and heat (value be
     variables_info:
         TI:
             rows:
-                set: needs
-
-act_capacity:
-    name: total capacity per activity
-    type: endogenous
-    coordinates: [scenarios,activities]
-    variables_info:
-        act_capacity:
-            cols:
-                set: activities
-        season_capacity:
-            cols:
-                set: activities
-                filters: {seasonal: y}   
-
-season_limit:
-    name: seasonal activity limit
-    type: endogenous
-    coordinates: [scenarios,activities,time_hour]
-    variables_info:
-        season_limit:
-            rows:
-                set: time_hour
-            cols:
-                set: activities
-                filters: {seasonal: y}
+                set: needs 
 
 #STORAGE
 SOC_min:        #valore minimo del livelo di storage [kWh]
@@ -607,6 +579,7 @@ min_charge:        #valore minimo (negativo) per X dello storage= massimo valore
 #         SOC_start_cool:
 #             rows:
 #                 set: time_hour
+#                 filters: {peak: n}
 #             cols:
 #                 set: techs
 #                 filters: {storage: y}
@@ -619,6 +592,7 @@ min_charge:        #valore minimo (negativo) per X dello storage= massimo valore
 #         SOC_second_part:
 #             rows:
 #                 set: time_hour
+#                 filters: {peak: n}
 #             cols:
 #                 set: activities
 #                 filters: {storage: y}
@@ -692,18 +666,17 @@ BEV_SOC:
 
 # -----------------------------------------------------------------------------
 # constants variables
-
-I_fa: 
+I_nf: 
     name: special identity matrix for flows aggregation into needs
     type: constant
-    coordinates: [flows, activities2]
+    coordinates: [needs, flows]
     variables_info:
-        I_fa:
+        I_nf:
             value: identity_rcot
             rows: 
-                set: flows
+                set: needs
             cols:
-                set: activities2
+                set: flows
 
 I_ta:               
     name: special identity matrix for activities aggregation into technologies
@@ -726,8 +699,10 @@ T_hh:
             value: lower_triangular
             rows: 
                 set: time_hour
+                filters: {peak: n}
             cols:
                 set: time_hour
+                filters: {peak: n}
 
 Flows_ones:
      name: Vector of 1s as long as flows
@@ -750,4 +725,3 @@ I_dh:
                 set: days
             cols:
                 set: time_hour
-
