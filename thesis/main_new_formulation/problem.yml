@@ -6,7 +6,7 @@ objective:                  # (optional) definition of the objective function
 expressions:                # definition of additional expressions (equalities/inequalities)   
     - tran(Q) - u @ tran(X) - diag(TI) @ Y - curtail == 0
     - d @ I_fa @ tran(X) - tran(Q)== 0
-    - TI == Flows_ones + mult(tran(TI_param),insulation)
+    - TI == Needs_ones + mult(tran(TI_param),insulation)
     - X_t == X @ tran(I_ta)
     - X_max == cf @ diag(cap_tot_no_stor)
     - X_max - X_t_no_stor >= 0

@@ -729,18 +729,18 @@ T_hh:
             cols:
                 set: time_hour
 
-Flows_ones:
-     name: Vector of 1s as long as flows
+Needs_ones:
+     name: Vector of 1s as long as needs
      type: constant 
      coordinates: [scenarios, needs] 
      variables_info:
-         Flows_ones: 
+         Needs_ones: 
              value: sum_vector
              cols:
                  set: needs
 
 I_dh: 
-    name: special identity matrix for flows aggregation into needs
+    name: special identity matrix for hours aggregation into days
     type: constant
     coordinates: [days, time_hour]
     variables_info:
