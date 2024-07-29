@@ -37,13 +37,13 @@ u:
 d:
     name: d #change of shape from the previous model
     type: exogenous
-    coordinates: [scenarios,needs,flows]
+    coordinates: [scenarios,needs,activities]
     variables_info:
         d:
             rows:
                 set: needs
             cols:
-                set: flows
+                set: activities
 
 cf:
     name: cf
@@ -290,11 +290,14 @@ cool_factors:
         cool_factors:
             rows:
                 set: techs
-                filters: {storage: y}
         cool_factors_t:
             intra:
                 set: techs
                 filters: {storage: y}
+        cool_factors_BEV:
+            intra:
+                set: techs
+                filters: {BEV: y}
 
 n_hours:                        #scalar to give as input to T_hh_cool
     name: number of hours
@@ -464,6 +467,10 @@ cap_tot:
             cols:
                 set: techs
                 filters: {storage: y}
+        cap_tot_BEV:
+            cols:
+                set: techs
+                filters: {BEV: y}
 
 #Thermal insulation
 insulation:                 
@@ -693,18 +700,6 @@ BEV_SOC:
 # -----------------------------------------------------------------------------
 # constants variables
 
-I_fa: 
-    name: special identity matrix for flows aggregation into needs
-    type: constant
-    coordinates: [flows, activities2]
-    variables_info:
-        I_fa:
-            value: identity_rcot
-            rows: 
-                set: flows
-            cols:
-                set: activities2
-
 I_ta:               
     name: special identity matrix for activities aggregation into technologies
     type: constant
@@ -717,17 +712,17 @@ I_ta:
             cols:
                 set: activities
 
-T_hh:
-    name: Lower triangular matrix (used to depict storage state of charge)
-    type: constant 
-    coordinates: [time_hour] 
-    variables_info:
-        T_hh: 
-            value: lower_triangular
-            rows: 
-                set: time_hour
-            cols:
-                set: time_hour
+# T_hh:
+#     name: Lower triangular matrix (used to depict storage state of charge)
+#     type: constant 
+#     coordinates: [time_hour] 
+#     variables_info:
+#         T_hh: 
+#             value: lower_triangular
+#             rows: 
+#                 set: time_hour
+#             cols:
+#                 set: time_hour
 
 Needs_ones:
      name: Vector of 1s as long as needs
