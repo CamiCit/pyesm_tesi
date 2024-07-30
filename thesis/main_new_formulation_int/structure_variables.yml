@@ -372,7 +372,7 @@ curtail:
 
 cap_new:
     name: cap_new
-    type: endogenous
+    type: endogenous_integer
     coordinates: [scenarios,techs]
     variables_info:
         cap_new:
@@ -474,8 +474,8 @@ cap_tot:
 
 #Thermal insulation
 insulation:                 
-    name: thermal insulation    #Should be binary: 1 if is installed, 0 if isnt
-    type: endogenous
+    name: thermal insulation    #Should be binary: 1 if is installed, 0 if isnt (integer limited )
+    type: endogenous_integer
     coordinates: [scenarios]
     variables_info:
         insulation:

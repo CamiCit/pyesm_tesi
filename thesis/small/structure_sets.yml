@@ -18,56 +18,17 @@
 # -----------------------------------------------------------------------------
 # sets
 
-days:                                        
-    symbol: day                                   
-    table_name: _set_days                         
-    table_structure:                           
-        name: [days_names, TEXT] 
-
 time_hour:                                        
     symbol: th                                   
     table_name: _set_th                         
     table_structure:                           
-        name: [th_names, TEXT]
-        aggregation: [days, TEXT]
-        filters: 
-            peak:                                  
-                header: [h_peak, TEXT]
-                values: [y, n]              
+        name: [th_names, TEXT]                  
 
 needs:                                        
     symbol: n                                   
     table_name: _set_needs                         
     table_structure:                            
-        name: [n_names, TEXT]                    
-                                   
-techs:                                        
-    symbol: t                                   
-    table_name: _set_t                         
-    table_structure:                            
-        name: [t_names, TEXT] 
-        filters:                                
-            storage:                                  
-                header: [t_storage, TEXT]        
-                values: [y, n]
-            BEV:                                  
-                header: [t_BEV, TEXT]        
-                values: [y, n]            
-                 
-
-activities:                                        
-    symbol: a                                   
-    table_name: _set_a                         
-    table_structure:                            
-        name: [a_names, TEXT] 
-        aggregation: [techs, TEXT]
-        filters:                                
-            storage:                                  
-                header: [a_storage, TEXT]
-                values: [y, n]                              
-            seasonal:                                  
-                header: [a_season, TEXT]
-                values: [y, n]
+        name: [n_names, TEXT]   
 
 scenarios:                                        
     symbol: s                                   

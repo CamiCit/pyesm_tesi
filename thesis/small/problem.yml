@@ -1,0 +1,8 @@
+# SYMBOLIC PROBLEM
+
+objective:                  # (optional) definition of the objective function
+    - Minimize(sum(Q))         # Minimize() or Maximize() with a scalar obj expression
+
+expressions:                # definition of additional expressions (equalities/inequalities)   
+    - Q >= 0              
+    - u @ Q == 3
