@@ -12,7 +12,7 @@ expressions:                # definition of additional expressions (equalities/i
     - X_max - X_t_no_stor >= 0
     - X_no_stor >= 0 #all X must be positive, except the storage, and Q is all positive (except storage and export thanks to diagonal d)
     - curtail >= 0
-    - cap_new >= 0
+    - cap_new == new_units @ diag(cap_units)
     - insulation >= 0
     - 1 - insulation >= 0 #should be a binary variable
     - cap_tot == cap_new + cap_i

@@ -95,6 +95,15 @@ cap_i:
             cols:
                 set: techs
 
+cap_units:
+    name: cap_units
+    type: exogenous
+    coordinates: [scenarios,techs]
+    variables_info:
+        cap_units:
+            cols:
+                set: techs              
+
 Act_constr:
     name: Act_constr
     type: exogenous
@@ -352,9 +361,18 @@ curtail:
                 set: time_hour
                 filters: {peak: y}
 
+new_units:
+    name: new_units #integer variable
+    type: endogenous_integer
+    coordinates: [scenarios,techs]
+    variables_info:
+        new_units:
+            cols:
+                set: techs
+
 cap_new:
     name: cap_new
-    type: endogenous_integer
+    type: endogenous
     coordinates: [scenarios,techs]
     variables_info:
         cap_new:
