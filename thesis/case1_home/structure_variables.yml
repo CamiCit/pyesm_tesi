@@ -130,7 +130,7 @@ sf:
 #Thermal insulation
 TI_param:        #0 for all needs except cold (value between [0,1]) and heat (value between [-1,0])
     name: TI_param
-    type: exogenous
+    type: exogenous_integer
     coordinates: [scenarios,needs]
     variables_info:
         TI_param:
@@ -372,7 +372,7 @@ curtail:
 
 cap_new:
     name: cap_new
-    type: endogenous
+    type: endogenous_integer
     coordinates: [scenarios,techs]
     variables_info:
         cap_new:

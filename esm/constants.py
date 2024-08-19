@@ -169,6 +169,7 @@ class Constants:
         'Minimize': cp.Minimize,
         'Maximize': cp.Maximize,
         'power_tri': util_functions.power_tril,
+        'power_vector': util_functions.power_vector,
     }
 
     # NUMERICAL SETTINGS
