@@ -296,6 +296,20 @@ n_hours:                        #scalar to give as input to T_hh_cool
     coordinates: [scenarios] 
     variables_info:
         n_hours: 
+
+n_years:                        #scalar to give as input to power_vector for NPC
+    name: number of years
+    type: exogenous 
+    coordinates: [scenarios] 
+    variables_info:
+        n_years: 
+
+disc_frac:                        #Scalar: 1/(1+r)
+    name: Discount rate fraction
+    type: exogenous 
+    coordinates: [scenarios] 
+    variables_info:
+        disc_frac: 
 # -----------------------------------------------------------------------------
 # endogenous variables
 Q:
@@ -756,4 +770,3 @@ I_dh:
                 set: days
             cols:
                 set: time_hour
-
