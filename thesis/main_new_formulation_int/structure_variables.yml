@@ -503,6 +503,7 @@ TI:        #0 for all needs except cold (value between [0,1]) and heat (value be
             rows:
                 set: needs
 
+#Seasonal activities
 act_capacity:
     name: total capacity per activity
     type: endogenous

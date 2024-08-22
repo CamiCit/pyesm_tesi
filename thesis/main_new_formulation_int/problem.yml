@@ -14,7 +14,7 @@ expressions:                # definition of additional expressions (equalities/i
     - curtail >= 0
     - cap_new == new_units @ diag(cap_units)
     - insulation >= 0
-    - 1 - insulation >= 0 #should be a binary variable
+    - 1 - insulation >= 0 #To make binary an integer variable
     - cap_tot == cap_new + cap_i
     - cost_op_hours == X @ diag(cost_op)
     - cost_op_tot == (days_per_type @ I_dh) @ cost_op_hours
@@ -34,8 +34,8 @@ expressions:                # definition of additional expressions (equalities/i
     - SOC_min == mult(H_ones,(cap_tot_stor @ storage_min))
     - SOC_start == mult(H_ones,(cap_tot_stor @ storage_start))
     - SOC_t == mult(SOC_start_t,power_vector(n_hours,loss_factors_t)) - power_tri(n_hours,loss_factors_t) @ X_t_stor_t
-    - SOC >= SOC_min
-    - SOC <= SOC_max
+    - SOC - SOC_min >=0
+    - SOC_max - SOC >=0
 
     #BEV equations
     - BEV_SOC_max == mult(H_ones,(cap_tot_BEV @ BEV_level_max))

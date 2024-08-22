@@ -95,6 +95,15 @@ cap_i:
             cols:
                 set: techs
 
+cap_units:
+    name: cap_units
+    type: exogenous
+    coordinates: [scenarios,techs]
+    variables_info:
+        cap_units:
+            cols:
+                set: techs      
+
 Act_constr:
     name: Act_constr
     type: exogenous
@@ -130,7 +139,7 @@ sf:
 #Thermal insulation
 TI_param:        #0 for all needs except cold (value between [0,1]) and heat (value between [-1,0])
     name: TI_param
-    type: exogenous_integer
+    type: exogenous
     coordinates: [scenarios,needs]
     variables_info:
         TI_param:
@@ -148,39 +157,30 @@ TI_cost:        #0 for all needs except cold (value between [0,1]) and heat (val
 storage_min:        #valore minimo del livelo di storage [0,1]
     name: storage_min
     type: exogenous
-    coordinates: [scenarios,techs,time_hour]
+    coordinates: [scenarios,techs]
     variables_info:
         storage_min:
             rows:
-                set: time_hour
-                filters: {peak: n}
-            cols:
                 set: techs
                 filters: {storage: y}
 
 storage_max:        #valore massimo del livelo di storage [0,1]
     name: storage_max
     type: exogenous
-    coordinates: [scenarios,techs,time_hour]
+    coordinates: [scenarios,techs]
     variables_info:
         storage_max:
             rows:
-                set: time_hour
-                filters: {peak: n}
-            cols:
                 set: techs
                 filters: {storage: y}
 
 storage_start:        #valore iniziale del livelo di storage [0,1], anche se definito per tutti i tempi, vale solo per la prima ora
     name: storage_start
     type: exogenous
-    coordinates: [scenarios,techs,time_hour]
+    coordinates: [scenarios,techs]
     variables_info:
         storage_start:
             rows:
-                set: time_hour
-                filters: {peak: n}
-            cols:
                 set: techs
                 filters: {storage: y}
 
@@ -209,64 +209,34 @@ storage_min_charge:        #da moltiplicare a capacità di storage [kWh] per ott
                 filters: {storage: y}
 
 
-Cool_vector:                        #Cooling of starting value vector
-    name: Cool_vector
-    type: exogenous 
-    coordinates: [scenarios,techs,time_hour] 
-    variables_info:
-        Cool_vector: 
-            rows: 
-                set: techs
-                filters: {storage: y}
-            cols: 
-                set: time_hour
-                filters: {peak: n}
-        Cool_vector_t: 
-            intra: 
-                set: techs
-                filters: {storage: y}
-            cols: 
-                set: time_hour
-                filters: {peak: n}
-
-
 #BEV exogenous variables
 BEV_level_min:        #to be multiplied by BEV sorage capacity [kWh] to obtain min BEV SOC 
     name: BEV_level_min
     type: exogenous
-    coordinates: [scenarios,techs,time_hour]
+    coordinates: [scenarios,techs]
     variables_info:
         BEV_level_min:
             rows:
-                set: time_hour
-                filters: {peak: n}
-            cols:
                 set: techs
                 filters: {BEV: y}
 
 BEV_level_max:        #to be multiplied by BEV sorage capacity [kWh] to obtain max BEVSOC 
     name: BEV_level_max
     type: exogenous
-    coordinates: [scenarios,techs,time_hour]
+    coordinates: [scenarios,techs]
     variables_info:
         BEV_level_max:
             rows:
-                set: time_hour
-                filters: {peak: n}
-            cols:
                 set: techs
                 filters: {BEV: y}
 
 BEV_level_start:        #to be multiplied by BEV sorage capacity [kWh] to obtain starting point of BEV SOC 
     name: BEV_level_start
     type: exogenous
-    coordinates: [scenarios,techs,time_hour]
+    coordinates: [scenarios,techs]
     variables_info:
         BEV_level_start:
             rows:
-                set: time_hour
-                filters: {peak: n}
-            cols:
                 set: techs
                 filters: {BEV: y}
 
@@ -282,19 +252,19 @@ BEV_vector:
                 set: techs
                 filters: {BEV: y}
 
-cool_factors:
-    name: cooling factor for each storage technology
+loss_factors:
+    name: loss(cooling) factor for each storage technology
     type: exogenous
     coordinates: [scenarios,techs]
     variables_info:
-        cool_factors:
+        loss_factors:
             rows:
                 set: techs
-        cool_factors_t:
+        loss_factors_t:
             intra:
                 set: techs
                 filters: {storage: y}
-        cool_factors_BEV:
+        loss_factors_BEV:
             intra:
                 set: techs
                 filters: {BEV: y}
@@ -305,6 +275,20 @@ n_hours:                        #scalar to give as input to T_hh_cool
     coordinates: [scenarios] 
     variables_info:
         n_hours: 
+
+n_years:                        #scalar to give as input to power_vector for NPC
+    name: number of years
+    type: exogenous 
+    coordinates: [scenarios] 
+    variables_info:
+        n_years: 
+
+disc_frac:                        #Scalar: 1/(1+r)
+    name: Discount rate fraction
+    type: exogenous 
+    coordinates: [scenarios] 
+    variables_info:
+        disc_frac: 
 # -----------------------------------------------------------------------------
 # endogenous variables
 Q:
@@ -369,6 +353,15 @@ curtail:
             cols:
                 set: time_hour
                 filters: {peak: y}
+
+new_units:
+    name: new_units #integer variable
+    type: endogenous_integer
+    coordinates: [scenarios,techs]
+    variables_info:
+        new_units:
+            cols:
+                set: techs
 
 cap_new:
     name: cap_new
@@ -489,6 +482,7 @@ TI:        #0 for all needs except cold (value between [0,1]) and heat (value be
             rows:
                 set: needs
 
+#Seasonal activities
 act_capacity:
     name: total capacity per activity
     type: endogenous
@@ -700,18 +694,6 @@ BEV_SOC:
 # -----------------------------------------------------------------------------
 # constants variables
 
-# I_fa: 
-#     name: special identity matrix for flows aggregation into needs
-#     type: constant
-#     coordinates: [flows, activities2]
-#     variables_info:
-#         I_fa:
-#             value: identity_rcot
-#             rows: 
-#                 set: flows
-#             cols:
-#                 set: activities2
-
 I_ta:               
     name: special identity matrix for activities aggregation into technologies
     type: constant
@@ -724,29 +706,40 @@ I_ta:
             cols:
                 set: activities
 
-T_hh:
-    name: Lower triangular matrix (used to depict storage state of charge)
-    type: constant 
-    coordinates: [time_hour] 
-    variables_info:
-        T_hh: 
-            value: lower_triangular
-            rows: 
-                set: time_hour
-                filter: {peak: n}
-            cols:
-                set: time_hour
-                filter: {peak: n}
+# T_hh:
+#     name: Lower triangular matrix (used to depict storage state of charge)
+#     type: constant 
+#     coordinates: [time_hour] 
+#     variables_info:
+#         T_hh: 
+#             value: lower_triangular
+#             rows: 
+#                 set: time_hour
+#                 filter: {peak: n}
+#             cols:
+#                 set: time_hour
+#                 filter: {peak: n}
 
-Needs_ones:
+N_ones:
      name: Vector of 1s as long as needs
      type: constant 
      coordinates: [scenarios, needs] 
      variables_info:
-         Needs_ones: 
+         N_ones: 
              value: sum_vector
              cols:
                  set: needs
+
+H_ones:
+     name: Vector of 1s as long as hours
+     type: constant 
+     coordinates: [scenarios, time_hour] 
+     variables_info:
+        H_ones: 
+             value: sum_vector
+             rows:
+                 set: time_hour
+                 filters: {peak: n}
 
 I_dh: 
     name: special identity matrix for hours aggregation into days
